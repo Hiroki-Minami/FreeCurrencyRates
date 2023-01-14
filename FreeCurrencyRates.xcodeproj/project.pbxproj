@@ -18,6 +18,7 @@
 		94BCC651297215EA004D2D01 /* BaseToOthersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BCC650297215EA004D2D01 /* BaseToOthersTableViewCell.swift */; };
 		94BCC65329721A38004D2D01 /* CurrenciesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BCC65229721A38004D2D01 /* CurrenciesTableViewCell.swift */; };
 		94BCC65529721AA8004D2D01 /* CurrenciesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BCC65429721AA8004D2D01 /* CurrenciesTableViewController.swift */; };
+		94BCC65729724582004D2D01 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BCC65629724582004D2D01 /* Currency.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		94BCC650297215EA004D2D01 /* BaseToOthersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToOthersTableViewCell.swift; sourceTree = "<group>"; };
 		94BCC65229721A38004D2D01 /* CurrenciesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesTableViewCell.swift; sourceTree = "<group>"; };
 		94BCC65429721AA8004D2D01 /* CurrenciesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesTableViewController.swift; sourceTree = "<group>"; };
+		94BCC65629724582004D2D01 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 		94BCC6462972024E004D2D01 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				94BCC65629724582004D2D01 /* Currency.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94BCC65729724582004D2D01 /* Currency.swift in Sources */,
 				94BCC65529721AA8004D2D01 /* CurrenciesTableViewController.swift in Sources */,
 				94BCC651297215EA004D2D01 /* BaseToOthersTableViewCell.swift in Sources */,
 				94BCC65329721A38004D2D01 /* CurrenciesTableViewCell.swift in Sources */,

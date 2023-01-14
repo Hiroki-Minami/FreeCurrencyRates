@@ -18,6 +18,7 @@ class CurrenciesTableViewController: UITableViewController {
     Task {
       do {
         let currencies = try await CurrencyNetworkController.shared.fetchListOfCurrnecy()
+        Currency.currencies = currencies
         updateUI(with: currencies)
       } catch {
         displayError(error, title: "Getting Currencies Failed")
@@ -44,15 +45,15 @@ class CurrenciesTableViewController: UITableViewController {
     return currencies.count
   }
   
-   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-   let cell = tableView.dequeueReusableCell(withIdentifier: "Currencies", for: indexPath) as! CurrenciesTableViewCell
-     
-   // Configure the cell...
-     let short = keys[indexPath.row]
-     let long = self.currencies[keys[indexPath.row]]
-     cell.shortNameTextLabel.text = short
-     cell.fullNameTextLabel.text = long
-   
-   return cell
-   }
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "Currencies", for: indexPath) as! CurrenciesTableViewCell
+    
+    // Configure the cell...
+    let short = keys[indexPath.row]
+    let long = self.currencies[keys[indexPath.row]]
+    cell.shortNameTextLabel.text = short
+    cell.fullNameTextLabel.text = long
+    
+    return cell
+  }
 }

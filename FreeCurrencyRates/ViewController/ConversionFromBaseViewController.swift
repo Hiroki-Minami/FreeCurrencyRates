@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ConversionFromBaseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ConversionFromBaseViewController: UIViewController {
   
   @IBOutlet var tableView: UITableView!
   
@@ -16,41 +16,16 @@ class ConversionFromBaseViewController: UIViewController, UITableViewDelegate, U
   
   @IBOutlet var fromButton: UIButton!
   
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return conversionList.count
-  }
-  
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "BaseToOthers", for: indexPath) as! BaseToOthersTableViewCell
-    
-    let key = keys[indexPath.row]
-    
-    cell.currencyTextLabel.text = key
-    cell.rateTextLabel.text = String(conversionList[key]!)
-    
-    return cell
-  }
-  
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.delegate = self
     tableView.dataSource = self
-    // Do any additional setup after loading the view.
-    Task {
-      do {
-        let currencies = try await CurrencyNetworkController.shared.fetchListOfCurrnecy()
-        updateBaseUI(with: currencies)
-
-      } catch {
-        displayError(error, title: "Getting Currencies Failed")
-      }
-    }
+    // Do any additional setup after loading the view.d
+    keys = Currency.shortNamesForCurrencies
+    updateBaseUI()
   }
   
-  func updateBaseUI(with currencies: [String: String]) {
-    self.keys = currencies.keys.sorted(by: {$0 < $1})
-    
+  func updateBaseUI() {
     let closure = { (action: UIAction) in
       self.fromButton.setTitle(action.title, for: .normal)
       Task {
@@ -81,5 +56,22 @@ class ConversionFromBaseViewController: UIViewController, UITableViewDelegate, U
     let alert = UIAlertController(title: title, message: error.localizedDescription, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
     self.present(alert, animated: true, completion: nil)
+  }
+}
+
+extension ConversionFromBaseViewController: UITableViewDelegate, UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return conversionList.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "BaseToOthers", for: indexPath) as! BaseToOthersTableViewCell
+    
+    let key = keys[indexPath.row]
+    
+    cell.currencyTextLabel.text = key
+    cell.rateTextLabel.text = String(conversionList[key]!)
+    
+    return cell
   }
 }

@@ -29,13 +29,13 @@ struct CurrencyNetworkController {
     let baseCurrencyURL = Self.baseURL.appendingPathComponent("currencies/\(currency).json")
     let (data, response) = try await URLSession.shared.data(from: baseCurrencyURL)
     
-    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw CurrencyNetworkError.currenciesNotFound }
+    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw CurrencyNetworkError.currnecyConversionFailure }
     
     let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
     if let conversion = convertedDataArray[currency] as? [String: Double] {
       return conversion
     } else {
-      throw CurrencyNetworkError.currenciesNotFound
+      throw CurrencyNetworkError.currnecyConversionFailure
     }
   }
   
@@ -43,20 +43,18 @@ struct CurrencyNetworkController {
     let conversionURL = Self.baseURL.appendingPathComponent("currencies/\(fromCurrency)/\(toCurrency).json")
     let (data, response) = try await URLSession.shared.data(from: conversionURL)
     
-    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw CurrencyNetworkError.currenciesNotFound }
+    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw CurrencyNetworkError.currnecyConversionFailure }
     
     let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
     if let conversion = convertedDataArray[toCurrency] as? Double {
       return conversion
     } else {
-      throw CurrencyNetworkError.currenciesNotFound
+      throw CurrencyNetworkError.currnecyConversionFailure
     }
   }
 }
 
 enum CurrencyNetworkError: Error, LocalizedError {
   case currenciesNotFound
-//  case menuItemsNotFound
-//  case orderRequestFailed
-//  case imageDataMissing
+  case currnecyConversionFailure
 }
