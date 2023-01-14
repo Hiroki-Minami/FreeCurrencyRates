@@ -19,28 +19,39 @@ struct CurrencyNetworkController {
     
     guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw CurrencyNetworkError.currenciesNotFound }
     
-    print(String(data: data, encoding: .utf8)!)
     let decoder = JSONDecoder()
     let listResponse = try decoder.decode([String: String].self, from: data)
-    print(listResponse)
     
     return listResponse
   }
   
-  func fetchConversionFromBaseCurrency(currency: String) async throws -> [String: Double] {
+  func fetchConversionFromBaseCurrency(currency: String) async throws -> [String: String] {
     let baseCurrencyURL = Self.baseURL.appendingPathComponent("currencies/\(currency).json")
     let (data, response) = try await URLSession.shared.data(from: baseCurrencyURL)
     
     guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw CurrencyNetworkError.currenciesNotFound }
     
-//    let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [Any]
-//    print(convertedDataArray)
+    let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
+    
+//    print(convertedDataArray[currency])
+//    print(type(of: convertedDataArray[currency]))
+//
+//    if let conversion = convertedDataArray[currency] {
+//      let str = String(data: , encoding: <#T##String.Encoding#>
+//
+//      return [:]
+//    } else {
+//      throw CurrencyNetworkError.currenciesNotFound
+//    }
+//    print(convertedDataArray[currency])
 //    let convertedData = convertedDataArray.map { jsonData -> [String: Any] in
 //      return jsonData as! [String: Any]
 //    }
 //
-//    let conversion = convertedData[currency] as! [String: Double]
-    let decoder = JSONDecoder()
+//    print(convertedData)
+//
+////    let conversion = convertedData[currency] as! [String: Double]
+//    let decoder = JSONDecoder()
     
     // TODO:
 //    data.

@@ -69,6 +69,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Base to Another" id="xbx-WR-1R6"/>
+                    <connections>
+                        <outlet property="fromButton" destination="jCK-PB-6G0" id="pnj-bd-Qcd"/>
+                        <outlet property="tableView" destination="puD-zq-hNw" id="tkF-uV-S93"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5xZ-O2-UQb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
