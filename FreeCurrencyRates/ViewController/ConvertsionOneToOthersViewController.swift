@@ -8,8 +8,7 @@
 import UIKit
 
 class ConvertsionOneToOthersViewController: UIViewController {
-  
-  var conversion: Double?
+
   var keys: [String] = []
   
   @IBOutlet var conversionLabel: UILabel!
@@ -19,64 +18,45 @@ class ConvertsionOneToOthersViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    Task {
-      do {
-        let currencies = try await CurrencyNetworkController.shared.fetchListOfCurrnecy()
-        updateBaseUI(with: currencies)
-      } catch {
-        displayError(error, title: "Getting Currencies Failed")
-      }
-    }
+    keys = Currency.shortNamesForCurrencies
+    updateBaseUI()
   }
   
-  func updateBaseUI(with currencies: [String: String]) {
-    self.keys = currencies.keys.sorted(by: {$0 < $1})
+  func updateBaseUI() {
+    let fromClosure = setUpClosure(targetButton: fromButton, anothorButton: toButton, anotherButtonTitle: "To")
+    let toClosure = setUpClosure(targetButton: toButton, anothorButton: fromButton, anotherButtonTitle: "From")
     
-    let closure = { (action: UIAction) in
-      self.fromButton.setTitle(action.title, for: .normal)
-      if let title = self.toButton.titleLabel!.text, title != "To" {
-        Task {
-          do {
-            let conversions = try await CurrencyNetworkController.shared.fetchConversionFromOneToAnother(from: action.title, to: self.toButton.titleLabel!.text!)
-            self.updateUI(with: conversions)
-          } catch {
-            self.displayError(error, title: "Getting Currencies Failed")
-          }
-        }
-      }
+    let fromActions = self.keys.map { str in
+      UIAction(title: str, handler: fromClosure)
     }
-    
-    let closure2 = { (action: UIAction) in
-      self.toButton.setTitle(action.title, for: .normal)
-      if let title = self.fromButton.titleLabel!.text, title != "From" {
-        Task {
-          do {
-            let conversions = try await CurrencyNetworkController.shared.fetchConversionFromOneToAnother(from: self.fromButton.titleLabel!.text!, to: action.title)
-            self.updateUI(with: conversions)
-          } catch {
-            self.displayError(error, title: "Getting Currencies Failed")
-          }
-        }
-      }
+    let toActions = self.keys.map { str in
+      UIAction(title: str, handler: toClosure)
     }
-    
-    let actions = self.keys.map { str in
-      UIAction(title: str, handler: closure)
-    }
-    
-    let actions2 = self.keys.map { str in
-      UIAction(title: str, handler: closure2)
-    }
-    fromButton.menu = UIMenu(children: actions)
+    fromButton.menu = UIMenu(children: fromActions)
     fromButton.showsMenuAsPrimaryAction = true
     
-    toButton.menu = UIMenu(children: actions2)
+    toButton.menu = UIMenu(children: toActions)
     toButton.showsMenuAsPrimaryAction = true
   }
   
+  func setUpClosure(targetButton: UIButton, anothorButton: UIButton, anotherButtonTitle: String) -> (_ action: UIAction) -> ()  {
+    let closure = { (action: UIAction) in
+      targetButton.setTitle(action.title, for: .normal)
+      if let title = anothorButton.titleLabel!.text, title != anotherButtonTitle {
+        Task {
+          do {
+            let conversions = try await CurrencyNetworkController.shared.fetchConversionFromOneToAnother(from: anothorButton.titleLabel!.text!, to: action.title)
+            self.updateUI(with: conversions)
+          } catch {
+            self.displayError(error, title: "Getting Currencies Failed")
+          }
+        }
+      }
+    }
+    return closure
+  }
+  
   func updateUI(with conversion: Double) {
-    self.conversion = conversion
     self.conversionLabel.text = String(conversion)
   }
   
