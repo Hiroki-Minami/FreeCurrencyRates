@@ -12,8 +12,7 @@ class ConversionFromBaseViewController: UIViewController, UITableViewDelegate, U
   @IBOutlet var tableView: UITableView!
   
   var keys: [String] = []
-  var conversionList: [String: String] = [:]
-  var fromCurrency: String?
+  var conversionList: [String: Double] = [:]
   
   @IBOutlet var fromButton: UIButton!
   
@@ -24,8 +23,10 @@ class ConversionFromBaseViewController: UIViewController, UITableViewDelegate, U
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "BaseToOthers", for: indexPath) as! BaseToOthersTableViewCell
     
-    cell.currencyTextLabel.text = ""
-    cell.rateTextLabel.text = ""
+    let key = keys[indexPath.row]
+    
+    cell.currencyTextLabel.text = key
+    cell.rateTextLabel.text = String(conversionList[key]!)
     
     return cell
   }
@@ -51,12 +52,11 @@ class ConversionFromBaseViewController: UIViewController, UITableViewDelegate, U
     self.keys = currencies.keys.sorted(by: {$0 < $1})
     
     let closure = { (action: UIAction) in
-      self.fromCurrency = action.title
       self.fromButton.setTitle(action.title, for: .normal)
       Task {
         do {
-          let currencies = try await CurrencyNetworkController.shared.fetchConversionFromBaseCurrency(currency: self.fromCurrency!)
-          self.updateUI(with: currencies)
+          let conversions = try await CurrencyNetworkController.shared.fetchConversionFromBaseCurrency(currency: action.title)
+          self.updateUI(with: conversions)
         } catch {
           self.displayError(error, title: "Getting Currencies Failed")
         }
@@ -70,9 +70,8 @@ class ConversionFromBaseViewController: UIViewController, UITableViewDelegate, U
     fromButton.showsMenuAsPrimaryAction = true
   }
   
-  func updateUI(with currencies: [String: String]) {
-    self.conversionList = currencies
-    self.keys = currencies.keys.sorted(by: {$0 < $1})
+  func updateUI(with conversions: [String: Double]) {
+    self.conversionList = conversions
     self.tableView.reloadData()
   }
   
@@ -83,15 +82,4 @@ class ConversionFromBaseViewController: UIViewController, UITableViewDelegate, U
     alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
-  
-  /*
-   // MARK: - Navigation
-   
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destination.
-   // Pass the selected object to the new view controller.
-   }
-   */
-  
 }

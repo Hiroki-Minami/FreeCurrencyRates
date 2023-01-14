@@ -101,44 +101,30 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="WaE-IK-LcN">
-                                <rect key="frame" x="0.0" y="147.33333333333331" width="393" height="621.66666666666674"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="OneToOthers" textLabel="HNj-GB-2Ya" style="IBUITableViewCellStyleDefault" id="r7R-zN-2IF">
-                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="r7R-zN-2IF" id="ElP-Gf-Low">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HNj-GB-2Ya">
-                                                    <rect key="frame" x="20" y="0.0" width="353" height="43.666667938232422"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select from and to" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6J-e7-B92">
+                                <rect key="frame" x="10" y="147.33333333333334" width="393" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EW9-W8-Ufm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="EW9-W8-Ufm" firstAttribute="trailing" secondItem="Dwm-J2-kf4" secondAttribute="trailing" id="2D4-O1-0rt"/>
-                            <constraint firstItem="WaE-IK-LcN" firstAttribute="trailing" secondItem="EW9-W8-Ufm" secondAttribute="trailing" id="A9r-I7-sfb"/>
-                            <constraint firstItem="EW9-W8-Ufm" firstAttribute="bottom" secondItem="WaE-IK-LcN" secondAttribute="bottom" id="E0V-jg-2BT"/>
+                            <constraint firstItem="F6J-e7-B92" firstAttribute="trailing" secondItem="EW9-W8-Ufm" secondAttribute="trailing" constant="10" id="82T-QZ-v4g"/>
+                            <constraint firstItem="F6J-e7-B92" firstAttribute="top" secondItem="Dwm-J2-kf4" secondAttribute="bottom" constant="10" id="MCd-KH-uyY"/>
                             <constraint firstItem="Dwm-J2-kf4" firstAttribute="top" secondItem="EW9-W8-Ufm" secondAttribute="top" id="OXX-3F-xAl"/>
-                            <constraint firstItem="WaE-IK-LcN" firstAttribute="bottom" secondItem="EW9-W8-Ufm" secondAttribute="bottom" id="X36-Tw-tyo"/>
-                            <constraint firstItem="WaE-IK-LcN" firstAttribute="top" secondItem="Dwm-J2-kf4" secondAttribute="bottom" constant="10" id="eID-8G-kba"/>
-                            <constraint firstItem="WaE-IK-LcN" firstAttribute="leading" secondItem="EW9-W8-Ufm" secondAttribute="leading" id="kgE-jJ-YRl"/>
+                            <constraint firstItem="F6J-e7-B92" firstAttribute="leading" secondItem="EW9-W8-Ufm" secondAttribute="leading" constant="10" id="lDF-XJ-Xta"/>
                             <constraint firstItem="Dwm-J2-kf4" firstAttribute="leading" secondItem="EW9-W8-Ufm" secondAttribute="leading" id="pnm-2y-keB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="One to Another" id="u56-f0-gKq"/>
+                    <connections>
+                        <outlet property="conversionLabel" destination="F6J-e7-B92" id="YQG-9J-TGT"/>
+                        <outlet property="fromButton" destination="Ueu-Tp-2zs" id="EhO-4x-MJ3"/>
+                        <outlet property="toButton" destination="VUu-FY-pUW" id="wTW-Gv-HDK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9nA-hO-mva" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

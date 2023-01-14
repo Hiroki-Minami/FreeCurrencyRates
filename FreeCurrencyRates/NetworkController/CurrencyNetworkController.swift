@@ -25,40 +25,18 @@ struct CurrencyNetworkController {
     return listResponse
   }
   
-  func fetchConversionFromBaseCurrency(currency: String) async throws -> [String: String] {
+  func fetchConversionFromBaseCurrency(currency: String) async throws -> [String: Double] {
     let baseCurrencyURL = Self.baseURL.appendingPathComponent("currencies/\(currency).json")
     let (data, response) = try await URLSession.shared.data(from: baseCurrencyURL)
     
     guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw CurrencyNetworkError.currenciesNotFound }
     
     let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
-    
-//    print(convertedDataArray[currency])
-//    print(type(of: convertedDataArray[currency]))
-//
-//    if let conversion = convertedDataArray[currency] {
-//      let str = String(data: , encoding: <#T##String.Encoding#>
-//
-//      return [:]
-//    } else {
-//      throw CurrencyNetworkError.currenciesNotFound
-//    }
-//    print(convertedDataArray[currency])
-//    let convertedData = convertedDataArray.map { jsonData -> [String: Any] in
-//      return jsonData as! [String: Any]
-//    }
-//
-//    print(convertedData)
-//
-////    let conversion = convertedData[currency] as! [String: Double]
-//    let decoder = JSONDecoder()
-    
-    // TODO:
-//    data.
-//    let baseCurrencyResponse = try decoder.decode([String: Any].self, from: data)
-    
-//    return Array(listResponse.keys)
-    return [:]
+    if let conversion = convertedDataArray[currency] as? [String: Double] {
+      return conversion
+    } else {
+      throw CurrencyNetworkError.currenciesNotFound
+    }
   }
   
   func fetchConversionFromOneToAnother(from fromCurrency: String, to toCurrency: String) async throws -> Double {
@@ -67,11 +45,12 @@ struct CurrencyNetworkController {
     
     guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw CurrencyNetworkError.currenciesNotFound }
     
-    let decoder = JSONDecoder()
-    let conversionResponse = try decoder.decode([String: String].self, from: data)
-    
-//    return Array(listResponse.keys)
-    return 0.0
+    let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
+    if let conversion = convertedDataArray[toCurrency] as? Double {
+      return conversion
+    } else {
+      throw CurrencyNetworkError.currenciesNotFound
+    }
   }
 }
 
