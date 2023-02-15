@@ -11,9 +11,6 @@ import RxCocoa
 
 class CurrenciesTableViewController: UITableViewController {
   
-  var keys: [String] = []
-  var currencies: [String: String] = [:]
-  
   private let disposeBag = DisposeBag()
   
   override func viewDidLoad() {
