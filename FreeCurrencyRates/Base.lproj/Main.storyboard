@@ -90,19 +90,29 @@
                                 <rect key="frame" x="0.0" y="103" width="393" height="34.333333333333343"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ueu-Tp-2zs">
-                                        <rect key="frame" x="0.0" y="0.0" width="196.66666666666666" height="34.333333333333336"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="189" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="From"/>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ypy-5R-I1a">
+                                        <rect key="frame" x="189" y="0.0" width="15.333333333333343" height="34.333333333333336"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VUu-FY-pUW">
-                                        <rect key="frame" x="196.66666666666663" y="0.0" width="196.33333333333337" height="34.333333333333336"/>
+                                        <rect key="frame" x="204.33333333333337" y="0.0" width="188.66666666666663" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="To"/>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="Ypy-5R-I1a" firstAttribute="centerY" secondItem="Dwm-J2-kf4" secondAttribute="centerY" id="AGD-Bj-6WW"/>
+                                    <constraint firstItem="Ypy-5R-I1a" firstAttribute="centerX" secondItem="Dwm-J2-kf4" secondAttribute="centerX" id="Uh5-hW-pg2"/>
+                                </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select from and to" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6J-e7-B92">
-                                <rect key="frame" x="10" y="147.33333333333334" width="393" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select from and to" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6J-e7-B92">
+                                <rect key="frame" x="10" y="147.33333333333334" width="383" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -112,7 +122,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="EW9-W8-Ufm" firstAttribute="trailing" secondItem="Dwm-J2-kf4" secondAttribute="trailing" id="2D4-O1-0rt"/>
-                            <constraint firstItem="F6J-e7-B92" firstAttribute="trailing" secondItem="EW9-W8-Ufm" secondAttribute="trailing" constant="10" id="82T-QZ-v4g"/>
+                            <constraint firstItem="F6J-e7-B92" firstAttribute="trailing" secondItem="EW9-W8-Ufm" secondAttribute="trailing" id="82T-QZ-v4g"/>
                             <constraint firstItem="F6J-e7-B92" firstAttribute="top" secondItem="Dwm-J2-kf4" secondAttribute="bottom" constant="10" id="MCd-KH-uyY"/>
                             <constraint firstItem="Dwm-J2-kf4" firstAttribute="top" secondItem="EW9-W8-Ufm" secondAttribute="top" id="OXX-3F-xAl"/>
                             <constraint firstItem="F6J-e7-B92" firstAttribute="leading" secondItem="EW9-W8-Ufm" secondAttribute="leading" constant="10" id="lDF-XJ-Xta"/>
@@ -152,7 +162,7 @@
         <!--Currencies-->
         <scene sceneID="PYz-18-hDd">
             <objects>
-                <tableViewController id="H04-lZ-yJf" customClass="CurrenciesTableViewController" customModule="FreeCurrencyRates" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="H04-lZ-yJf" customClass="CurrenciesViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="buP-tM-1Gd">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

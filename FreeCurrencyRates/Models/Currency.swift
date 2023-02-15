@@ -8,6 +8,10 @@
 import Foundation
 
 struct Currency {
+  typealias CurrencyType = [String: String]
+  typealias ConversionFromBaseCurrency = [String: Double]
+  typealias ConversionFromOneToAnother = Double
+  
   static var currencies: [String: String] = [:] {
     didSet {
       self.shortNamesForCurrencies = currencies.keys.sorted(by: {$0 < $1})

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class ConversionFromBaseViewController: UIViewController {
   
@@ -16,11 +18,12 @@ class ConversionFromBaseViewController: UIViewController {
   
   @IBOutlet var fromButton: UIButton!
   
+  let disposeBag = DisposeBag()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.delegate = self
     tableView.dataSource = self
-    // Do any additional setup after loading the view.d
     keys = Currency.shortNamesForCurrencies
     updateBaseUI()
   }
@@ -28,14 +31,13 @@ class ConversionFromBaseViewController: UIViewController {
   func updateBaseUI() {
     let closure = { (action: UIAction) in
       self.fromButton.setTitle(action.title, for: .normal)
-      Task {
-        do {
-          let conversions = try await CurrencyNetworkController.shared.fetchConversionFromBaseCurrency(currency: action.title)
-          self.updateUI(with: conversions)
-        } catch {
-          self.displayError(error, title: "Getting Currencies Failed")
-        }
-      }
+      CurrencyNetworkController.shared.fetchConversionFromBaseCurrency(currency: action.title)
+        .catchAndReturn([:])
+        .subscribe(onNext: {[weak self] in
+          self?.conversionList = $0
+          self?.tableView.reloadData()
+        })
+        .disposed(by: self.disposeBag)
     }
     
     let actions = self.keys.map { str in
@@ -43,11 +45,6 @@ class ConversionFromBaseViewController: UIViewController {
     }
     fromButton.menu = UIMenu(children: actions)
     fromButton.showsMenuAsPrimaryAction = true
-  }
-  
-  func updateUI(with conversions: [String: Double]) {
-    self.conversionList = conversions
-    self.tableView.reloadData()
   }
   
   func displayError(_ error: Error, title: String) {
