@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class CurrenciesTableViewController: UITableViewController {
   
@@ -17,13 +18,14 @@ class CurrenciesTableViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    print("test")
     CurrencyNetworkController.shared.fetchListOfCurrnecy()
       .catchAndReturn([:])
       .filter { $0.count > 0 }
       .subscribe(onNext: {[weak self] in
         Currency.currencies = $0
-        self?.tableView.reloadData()
+        DispatchQueue.main.async {
+          self?.tableView.reloadData()
+        }
       })
       .disposed(by: disposeBag)
   }

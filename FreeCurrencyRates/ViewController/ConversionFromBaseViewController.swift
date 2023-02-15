@@ -35,7 +35,9 @@ class ConversionFromBaseViewController: UIViewController {
         .catchAndReturn([:])
         .subscribe(onNext: {[weak self] in
           self?.conversionList = $0
-          self?.tableView.reloadData()
+          DispatchQueue.main.async {
+            self?.tableView.reloadData()
+          }
         })
         .disposed(by: self.disposeBag)
     }
