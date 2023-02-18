@@ -8,4 +8,12 @@ target 'FreeCurrencyRates' do
   # Pods for FreeCurrencyRates
   pod 'RxSwift'
   pod 'RxCocoa'
+
+  target 'FreeCurrencyRatesTests' do
+    inherit! :search_paths
+    pod 'Nimble'
+    pod 'RxNimble'
+    pod 'RxBlocking'
+    pod 'OHHTTPStubs/Swift'
+  end
 end

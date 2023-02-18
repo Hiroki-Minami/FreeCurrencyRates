@@ -1,26 +1,62 @@
 PODS:
+  - Nimble (10.0.0)
+  - OHHTTPStubs/Core (9.1.0)
+  - OHHTTPStubs/Default (9.1.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (9.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (9.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (9.1.0)
+  - OHHTTPStubs/Swift (9.1.0):
+    - OHHTTPStubs/Default
+  - RxBlocking (6.5.0):
+    - RxSwift (= 6.5.0)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
+  - RxNimble (6.0.0):
+    - RxNimble/RxBlocking (= 6.0.0)
+  - RxNimble/Core (6.0.0):
+    - Nimble (~> 10.0)
+    - RxSwift (~> 6.0)
+  - RxNimble/RxBlocking (6.0.0):
+    - RxBlocking
+    - RxNimble/Core
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
 
 DEPENDENCIES:
+  - Nimble
+  - OHHTTPStubs/Swift
+  - RxBlocking
   - RxCocoa
+  - RxNimble
   - RxSwift
 
 SPEC REPOS:
   trunk:
+    - Nimble
+    - OHHTTPStubs
+    - RxBlocking
     - RxCocoa
+    - RxNimble
     - RxRelay
     - RxSwift
 
 SPEC CHECKSUMS:
+  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
+  OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
+  RxBlocking: 04b5fd28bb5ea49f7d64b80db8bbfe50d9cc1c7d
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxNimble: 04caf11bd7e8f7669d68ef69b8fdfe41552c1ef2
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
 
-PODFILE CHECKSUM: 46f623c22af66195cfdd2304055cf50abdafd45c
+PODFILE CHECKSUM: b59b1d14e3b1fb609a0a2444d39824470b6eeff3
 
 COCOAPODS: 1.11.3

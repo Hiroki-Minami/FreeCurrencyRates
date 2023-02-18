@@ -47,7 +47,25 @@ class ConvertsionOneToOthersViewController: UIViewController {
       targetButton.setTitle(action.title, for: .normal)
       if let title = anothorButton.titleLabel!.text, title != anotherButtonTitle {
         CurrencyNetworkController.shared.fetchConversionFromOneToAnother(from: anothorButton.titleLabel!.text!, to: action.title)
-          .catchAndReturn(0)
+        
+          .retry(when: { error in
+            error.enumerated().flatMap { attemp, error -> Observable<Int> in
+              if attemp >= 3 {
+                return Observable.error(error)
+              } else if let casted = error as? CurrencyNetworkController.CurrencyNetworkError, casted == .currenciesNotFound {
+                return Observable.error(error)
+              }
+              print("== retrying after \(attemp + 5) seconds ==")
+              return Observable<Int>.timer(.seconds(attemp + 5), scheduler: MainScheduler.instance)
+                .take(1)
+            }
+          })
+          .do(
+            onError: { [weak self] error in
+              self?.displayError(error)
+            })
+            .catchAndReturn(-1.0)
+          .filter { $0 > 0 }
           .map({ conversion in
             return String(conversion)
           })
@@ -58,8 +76,20 @@ class ConvertsionOneToOthersViewController: UIViewController {
     return closure
   }
   
-  func displayError(_ error: Error, title: String) {
+  func displayError(_ error: Error) {
     guard let _ = viewIfLoaded?.window else { return }
+    var title: String
+    
+    if let error = error as? CurrencyNetworkController.CurrencyNetworkError {
+      switch error {
+      case .currenciesNotFound:
+        title = "URL is invalid. Contact us."
+      case .serverFailure:
+        title = "Network issues happened. Try it again later."
+      }
+    } else {
+      title = "An error occurred."
+    }
     
     let alert = UIAlertController(title: title, message: error.localizedDescription, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
