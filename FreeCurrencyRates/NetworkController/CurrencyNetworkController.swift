@@ -16,33 +16,49 @@ struct CurrencyNetworkController {
   private init() {}
   
   func fetchListOfCurrnecy() -> Observable<Currency.CurrencyType> {
-    let request = URLRequest(url: Self.baseURL.appendingPathComponent("currencies.json"))
-    return URLSession.shared.rx.data(request: request)
+    return buildRequest(url: Self.baseURL.appendingPathComponent("currencies.json"))
       .map { data in
         try JSONDecoder().decode(Currency.CurrencyType.self, from: data)
       }
   }
   
   func fetchConversionFromBaseCurrency(currency: String) -> Observable<Currency.ConversionFromBaseCurrency> {
-    let request = URLRequest(url: Self.baseURL.appendingPathComponent("currencies/\(currency).json"))
-    return URLSession.shared.rx.data(request: request)
-      .map { [currency] data in
+    return buildRequest(url: Self.baseURL.appendingPathComponent("currencies/\(currency).json"))
+      .map { data in
         let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
         return convertedDataArray[currency] as! Currency.ConversionFromBaseCurrency
       }
   }
   
   func fetchConversionFromOneToAnother(from fromCurrency: String, to toCurrency: String)  -> Observable<Currency.ConversionFromOneToAnother> {
-    let request = URLRequest(url: Self.baseURL.appendingPathComponent("currencies/\(fromCurrency)/\(toCurrency).json"))
-    return URLSession.shared.rx.data(request: request)
+    return buildRequest(url: Self.baseURL.appendingPathComponent("currencies/\(fromCurrency)/\(toCurrency).json"))
       .map { [toCurrency] data in
         let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
         return convertedDataArray[toCurrency] as! Currency.ConversionFromOneToAnother
       }
   }
+  
+  func buildRequest(url: URL) -> Observable<Data> {
+    let request = URLRequest(url: url)
+    
+    return URLSession.shared.rx.response(request: request)
+      .map { response, data in
+        switch response.statusCode {
+        case 200 ..< 300:
+          return data
+        case 400 ..< 500:
+          throw CurrencyNetworkError.currenciesNotFound
+        default:
+          throw CurrencyNetworkError.serverFailure
+        }
+      }
+  }
 }
 
-enum CurrencyNetworkError: Error, LocalizedError {
-  case currenciesNotFound
-  case currnecyConversionFailure
+extension CurrencyNetworkController {
+  enum CurrencyNetworkError: Error, LocalizedError {
+    case currenciesNotFound
+    case serverFailure
+  }
 }
+
