@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E4AC0EA161F3C32F811162C /* Pods_FreeCurrencyRates.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD5C6774AE073D2B45773DB7 /* Pods_FreeCurrencyRates.framework */; };
 		94BCC6332972013E004D2D01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BCC6322972013E004D2D01 /* AppDelegate.swift */; };
 		94BCC6352972013E004D2D01 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BCC6342972013E004D2D01 /* SceneDelegate.swift */; };
 		94BCC63A2972013E004D2D01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BCC6382972013E004D2D01 /* Main.storyboard */; };
@@ -36,6 +37,9 @@
 		94BCC65229721A38004D2D01 /* CurrenciesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesTableViewCell.swift; sourceTree = "<group>"; };
 		94BCC65429721AA8004D2D01 /* CurrenciesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesTableViewController.swift; sourceTree = "<group>"; };
 		94BCC65629724582004D2D01 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		B37207CBC7CCD10C8D7DBC06 /* Pods-FreeCurrencyRates.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreeCurrencyRates.release.xcconfig"; path = "Target Support Files/Pods-FreeCurrencyRates/Pods-FreeCurrencyRates.release.xcconfig"; sourceTree = "<group>"; };
+		B500A712B1A9D2337EF41CA6 /* Pods-FreeCurrencyRates.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreeCurrencyRates.debug.xcconfig"; path = "Target Support Files/Pods-FreeCurrencyRates/Pods-FreeCurrencyRates.debug.xcconfig"; sourceTree = "<group>"; };
+		FD5C6774AE073D2B45773DB7 /* Pods_FreeCurrencyRates.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreeCurrencyRates.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,17 +47,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E4AC0EA161F3C32F811162C /* Pods_FreeCurrencyRates.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D8993320AB500D0EDA1F73A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FD5C6774AE073D2B45773DB7 /* Pods_FreeCurrencyRates.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		674DE18B13583FB748071838 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B500A712B1A9D2337EF41CA6 /* Pods-FreeCurrencyRates.debug.xcconfig */,
+				B37207CBC7CCD10C8D7DBC06 /* Pods-FreeCurrencyRates.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		94BCC6262972013E004D2D01 = {
 			isa = PBXGroup;
 			children = (
 				94BCC6312972013E004D2D01 /* FreeCurrencyRates */,
 				94BCC6302972013E004D2D01 /* Products */,
+				674DE18B13583FB748071838 /* Pods */,
+				5D8993320AB500D0EDA1F73A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,9 +149,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94BCC6432972013F004D2D01 /* Build configuration list for PBXNativeTarget "FreeCurrencyRates" */;
 			buildPhases = (
+				BFE1CC2F1466A9AC511CCF4F /* [CP] Check Pods Manifest.lock */,
 				94BCC62B2972013E004D2D01 /* Sources */,
 				94BCC62C2972013E004D2D01 /* Frameworks */,
 				94BCC62D2972013E004D2D01 /* Resources */,
+				A4E9AE6DBB57AC4098CA0AC3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -182,6 +209,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A4E9AE6DBB57AC4098CA0AC3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FreeCurrencyRates/Pods-FreeCurrencyRates-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FreeCurrencyRates/Pods-FreeCurrencyRates-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreeCurrencyRates/Pods-FreeCurrencyRates-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BFE1CC2F1466A9AC511CCF4F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FreeCurrencyRates-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		94BCC62B2972013E004D2D01 /* Sources */ = {
@@ -338,6 +407,7 @@
 		};
 		94BCC6442972013F004D2D01 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B500A712B1A9D2337EF41CA6 /* Pods-FreeCurrencyRates.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -366,6 +436,7 @@
 		};
 		94BCC6452972013F004D2D01 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B37207CBC7CCD10C8D7DBC06 /* Pods-FreeCurrencyRates.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

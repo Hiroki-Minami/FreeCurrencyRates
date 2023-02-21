@@ -6,30 +6,25 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class CurrenciesTableViewController: UITableViewController {
   
-  var keys: [String] = []
-  var currencies: [String: String] = [:]
+  private let disposeBag = DisposeBag()
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    Task {
-      do {
-        let currencies = try await CurrencyNetworkController.shared.fetchListOfCurrnecy()
-        Currency.currencies = currencies
-        updateUI(with: currencies)
-      } catch {
-        displayError(error, title: "Getting Currencies Failed")
-      }
-    }
-  }
-  
-  func updateUI(with currencies: [String: String]) {
-    self.currencies = currencies
-    self.keys = currencies.keys.sorted(by: {$0 < $1})
-    self.tableView.reloadData()
+    CurrencyNetworkController.shared.fetchListOfCurrnecy()
+      .catchAndReturn([:])
+      .filter { $0.count > 0 }
+      .subscribe(onNext: {[weak self] in
+        Currency.currencies = $0
+        DispatchQueue.main.async {
+          self?.tableView.reloadData()
+        }
+      })
+      .disposed(by: disposeBag)
   }
   
   func displayError(_ error: Error, title: String) {
@@ -41,16 +36,14 @@ class CurrenciesTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // #warning Incomplete implementation, return the number of rows
-    return currencies.count
+    return Currency.currencies.count
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Currencies", for: indexPath) as! CurrenciesTableViewCell
     
-    // Configure the cell...
-    let short = keys[indexPath.row]
-    let long = self.currencies[keys[indexPath.row]]
+    let short = Currency.shortNamesForCurrencies[indexPath.row]
+    let long = Currency.currencies[short]
     cell.shortNameTextLabel.text = short
     cell.fullNameTextLabel.text = long
     

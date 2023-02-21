@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 struct CurrencyNetworkController {
   static let baseURL = URL(string: "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/")!
@@ -13,44 +15,30 @@ struct CurrencyNetworkController {
   
   private init() {}
   
-  func fetchListOfCurrnecy() async throws -> [String: String] {
-    let listURL = Self.baseURL.appendingPathComponent("currencies.json")
-    let (data, response) = try await URLSession.shared.data(from: listURL)
-    
-    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw CurrencyNetworkError.currenciesNotFound }
-    
-    let decoder = JSONDecoder()
-    let listResponse = try decoder.decode([String: String].self, from: data)
-    
-    return listResponse
+  func fetchListOfCurrnecy() -> Observable<Currency.CurrencyType> {
+    let request = URLRequest(url: Self.baseURL.appendingPathComponent("currencies.json"))
+    return URLSession.shared.rx.data(request: request)
+      .map { data in
+        try JSONDecoder().decode(Currency.CurrencyType.self, from: data)
+      }
   }
   
-  func fetchConversionFromBaseCurrency(currency: String) async throws -> [String: Double] {
-    let baseCurrencyURL = Self.baseURL.appendingPathComponent("currencies/\(currency).json")
-    let (data, response) = try await URLSession.shared.data(from: baseCurrencyURL)
-    
-    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw CurrencyNetworkError.currnecyConversionFailure }
-    
-    let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
-    if let conversion = convertedDataArray[currency] as? [String: Double] {
-      return conversion
-    } else {
-      throw CurrencyNetworkError.currnecyConversionFailure
-    }
+  func fetchConversionFromBaseCurrency(currency: String) -> Observable<Currency.ConversionFromBaseCurrency> {
+    let request = URLRequest(url: Self.baseURL.appendingPathComponent("currencies/\(currency).json"))
+    return URLSession.shared.rx.data(request: request)
+      .map { [currency] data in
+        let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
+        return convertedDataArray[currency] as! Currency.ConversionFromBaseCurrency
+      }
   }
   
-  func fetchConversionFromOneToAnother(from fromCurrency: String, to toCurrency: String) async throws -> Double {
-    let conversionURL = Self.baseURL.appendingPathComponent("currencies/\(fromCurrency)/\(toCurrency).json")
-    let (data, response) = try await URLSession.shared.data(from: conversionURL)
-    
-    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw CurrencyNetworkError.currnecyConversionFailure }
-    
-    let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
-    if let conversion = convertedDataArray[toCurrency] as? Double {
-      return conversion
-    } else {
-      throw CurrencyNetworkError.currnecyConversionFailure
-    }
+  func fetchConversionFromOneToAnother(from fromCurrency: String, to toCurrency: String)  -> Observable<Currency.ConversionFromOneToAnother> {
+    let request = URLRequest(url: Self.baseURL.appendingPathComponent("currencies/\(fromCurrency)/\(toCurrency).json"))
+    return URLSession.shared.rx.data(request: request)
+      .map { [toCurrency] data in
+        let convertedDataArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
+        return convertedDataArray[toCurrency] as! Currency.ConversionFromOneToAnother
+      }
   }
 }
 
